@@ -13,14 +13,14 @@ public class BioscoopContext : DbContext //https://learn.microsoft.com/en-us/asp
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        // modelBuilder.Entity<Director>().HasKey(f => f.Id);
-        //  modelBuilder.Entity<Director>().HasData(
-        //     CreateRegisseur(1, "Frank Darabont"),
-        //     CreateRegisseur(2, "Francis Ford Coppola"),
-        //     CreateRegisseur(3, "Christopher Nolan"),
-        //     CreateRegisseur(5, "Sidney Lumet"),
-        //     CreateRegisseur(6, "Steven Spielberg"),
-        //     CreateRegisseur(7, "Peter Jackson"));
+        modelBuilder.Entity<Director>().HasKey(f => f.Id);
+         modelBuilder.Entity<Director>().HasData(
+            CreateRegisseur(1, "Frank Darabont"),
+            CreateRegisseur(2, "Francis Ford Coppola"),
+            CreateRegisseur(3, "Christopher Nolan"),
+            CreateRegisseur(5, "Sidney Lumet"),
+            CreateRegisseur(6, "Steven Spielberg"),
+            CreateRegisseur(7, "Peter Jackson"));
          
          modelBuilder.Entity<Review>().HasData(
              CreateReview(4, 1, 4, "Nice", "PirateSoftware"),
