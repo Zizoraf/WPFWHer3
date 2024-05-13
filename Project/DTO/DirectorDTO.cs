@@ -1,6 +1,6 @@
 using Project.Models;
 
-public class RegisseurDTO {
+public class DirectorDTO {
     public ICollection<Film> Films { get; set; }
     public required string Name;
 }

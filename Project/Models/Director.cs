@@ -2,8 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Project.Models;
 
-public class Director
-{
+public class Director {
     [Key]
     public long Id { get; set; }
     public ICollection<Film> Films { get; set; }

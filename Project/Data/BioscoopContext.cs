@@ -29,10 +29,10 @@ public class BioscoopContext : DbContext //https://learn.microsoft.com/en-us/asp
              );
 
         modelBuilder.Entity<Film>().HasKey(f => f.Id);
-        // modelBuilder.Entity<Film>()
-        //     .HasOne<Director>(f => f.Director)
-        //     .WithMany(f => f.Films)
-        //     .HasForeignKey(f => f.RegisseurId);
+        modelBuilder.Entity<Film>()
+            .HasOne<Director>(f => f.Director)
+            .WithMany(f => f.Films)
+            .HasForeignKey(f => f.DirectorId);
         modelBuilder.Entity<Film>()
             .HasMany(f => f.FilmReviews)
             .WithOne(r => r.Film)
@@ -48,16 +48,16 @@ public class BioscoopContext : DbContext //https://learn.microsoft.com/en-us/asp
         );
     }
 
-    public DbSet<Director> Regisseurs { get; set; }
+    public DbSet<Director> Directors { get; set; }
     public DbSet<Film> Films { get; set; }
     public DbSet<Review> Reviews { get; set; }
 
     public Director CreateRegisseur(long id, string name){
         return new Director {Id = id, Name = name};
     }
-    public Film CreateFilm(long id, string titel, int year, long regisseurId){
+    public Film CreateFilm(long id, string titel, int year, long directorId){
         return new Film { Id = id, Titel = titel, Year = year , 
-            // RegisseurId = regisseurId
+            DirectorId = directorId
             
         };
     }

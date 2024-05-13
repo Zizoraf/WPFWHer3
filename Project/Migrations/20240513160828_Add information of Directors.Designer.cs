@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Project.Data;
 
@@ -10,9 +11,11 @@ using Project.Data;
 namespace Project.Migrations
 {
     [DbContext(typeof(BioscoopContext))]
-    partial class BioscoopContextModelSnapshot : ModelSnapshot
+    [Migration("20240513160828_Add information of Directors")]
+    partial class AddinformationofDirectors
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.4");
@@ -85,57 +88,6 @@ namespace Project.Migrations
                     b.HasIndex("DirectorId");
 
                     b.ToTable("Films");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1L,
-                            DirectorId = 1L,
-                            Titel = "The Shawshank Redemption",
-                            Year = 1994
-                        },
-                        new
-                        {
-                            Id = 2L,
-                            DirectorId = 2L,
-                            Titel = "The Godfather",
-                            Year = 1972
-                        },
-                        new
-                        {
-                            Id = 3L,
-                            DirectorId = 3L,
-                            Titel = "The Dark Knight",
-                            Year = 2008
-                        },
-                        new
-                        {
-                            Id = 4L,
-                            DirectorId = 2L,
-                            Titel = "The Godfather Part II",
-                            Year = 1974
-                        },
-                        new
-                        {
-                            Id = 5L,
-                            DirectorId = 4L,
-                            Titel = "12 Angry Men",
-                            Year = 1957
-                        },
-                        new
-                        {
-                            Id = 6L,
-                            DirectorId = 5L,
-                            Titel = "Schindler's List",
-                            Year = 1993
-                        },
-                        new
-                        {
-                            Id = 7L,
-                            DirectorId = 6L,
-                            Titel = "The Lord of the Rings: The Return of the King",
-                            Year = 2003
-                        });
                 });
 
             modelBuilder.Entity("Project.Models.Review", b =>
