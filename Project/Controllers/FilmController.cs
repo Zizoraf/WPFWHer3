@@ -49,29 +49,50 @@ namespace Project.Controllers
             return films;
         }
         
+        // GET: api/Film/OnlyReviewMovies
+        [HttpGet("OnlyReviewMovies")]
+        public async Task<ActionResult<IEnumerable<FilmDTO>>> GetFilmsWithReviews() {
+            var films = await _context.Films
+                .Include(film => film.Director)
+                .Include(film => film.FilmReviews)
+                .Where(film => film.FilmReviews.Count > 0)
+                .Select(film => new FilmDTO {
+                    Titel = film.Titel,
+                    Year = film.Year,
+                    FilmReviews = film.FilmReviews.Select(review => new FilmReviewDTO {
+                        Score = review.Score,
+                        Description = review.Description,
+                        CreationDate = review.CreationDate,
+                        Username = review.Username,
+                    }).ToList(),
+                    Director = film.DirectorId != null ? new DirectorDTO { Name = film.Director.Name } : null
+                }).ToListAsync();
+            return films;
+        }
+        
         // GET: api/Film/GetFilmsWithReviewCharacterCount150HigherAndLessThanYear
-        // [HttpGet]
-        // public async Task<ActionResult<IEnumerable<FilmDTO>>> GetFilmsWithReviewCharacterCount150HigherAndLessThanYear() {
-        //     var films = await _context.Films
-        //         .Include(film => film.Director)
-        //         .Include(film => film.FilmReviews)
-        //         .Where(film => film.FilmReviews.Any(review => 
-        //                 review.Description.Length > 150 &&
-        //                 review.CreationDate >= DateTime.Today.AddYears(-1)))
-        //         .Select(film => new FilmDTO {
-        //             Titel = film.Titel,
-        //             Year = film.Year,
-        //             FilmReviews = film.FilmReviews
-        //                 .Select(review => new FilmReviewDTO {
-        //                 Score = review.Score,
-        //                 Description = review.Description,
-        //                 CreationDate = review.CreationDate,
-        //                 Username = review.Username,
-        //             }).ToList(),
-        //             Director = film.DirectorId != null ? new DirectorDTO { Name = film.Director.Name } : null
-        //         }).ToListAsync();
-        //     return films;
-        // }
+        [HttpGet("GetFilmsWithReviewCharacterCount150HigherAndLessThanYear")]
+        public async Task<ActionResult<IEnumerable<FilmDTO>>> GetFilmsWithReviewCharacterCount150HigherAndLessThanYear() {
+            var films = await _context.Films
+                .Include(film => film.Director)
+                .Include(film => film.FilmReviews)
+                .Where(film => film.FilmReviews.Any(review => 
+                        review.Description.Length > 150 &&
+                        review.CreationDate >= DateTime.Today.AddYears(-1)))
+                .Select(film => new FilmDTO {
+                    Titel = film.Titel,
+                    Year = film.Year,
+                    FilmReviews = film.FilmReviews
+                        .Select(review => new FilmReviewDTO {
+                        Score = review.Score,
+                        Description = review.Description,
+                        CreationDate = review.CreationDate,
+                        Username = review.Username,
+                    }).ToList(),
+                    Director = film.DirectorId != null ? new DirectorDTO { Name = film.Director.Name } : null
+                }).ToListAsync();
+            return films;
+        }
 
         // GET: api/Film/5
         [HttpGet("{id}")]
