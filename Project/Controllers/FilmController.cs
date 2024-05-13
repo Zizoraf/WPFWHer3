@@ -38,7 +38,7 @@ namespace Project.Controllers
                 .Select(film => new FilmDTO {
                 Titel = film.Titel,
                 Year = film.Year,
-                FilmReviews = film.FilmReviews.Select(review => new FilmReviewDTO {
+                FilmReviews = film.FilmReviews.Select(review => new ReviewDTO {
                     Score = review.Score,
                     Description = review.Description,
                     CreationDate = review.CreationDate,
@@ -59,7 +59,7 @@ namespace Project.Controllers
                 .Select(film => new FilmDTO {
                     Titel = film.Titel,
                     Year = film.Year,
-                    FilmReviews = film.FilmReviews.Select(review => new FilmReviewDTO {
+                    FilmReviews = film.FilmReviews.Select(review => new ReviewDTO {
                         Score = review.Score,
                         Description = review.Description,
                         CreationDate = review.CreationDate,
@@ -83,7 +83,7 @@ namespace Project.Controllers
                     Titel = film.Titel,
                     Year = film.Year,
                     FilmReviews = film.FilmReviews
-                        .Select(review => new FilmReviewDTO {
+                        .Select(review => new ReviewDTO {
                         Score = review.Score,
                         Description = review.Description,
                         CreationDate = review.CreationDate,
@@ -114,10 +114,10 @@ namespace Project.Controllers
             return returnFilm;
         }
 
-        private List<FilmReviewDTO> convertReviewsToDTO (List<Review> reviews) {
-            List<FilmReviewDTO> reviewDTOs = new List<FilmReviewDTO>();
+        private List<ReviewDTO> convertReviewsToDTO (List<Review> reviews) {
+            List<ReviewDTO> reviewDTOs = new List<ReviewDTO>();
             foreach (Review review in reviews) {
-                reviewDTOs.Add(new FilmReviewDTO {
+                reviewDTOs.Add(new ReviewDTO {
                     Score = review.Score,
                     Description = review.Description,
                     CreationDate = review.CreationDate,
@@ -161,9 +161,12 @@ namespace Project.Controllers
         // POST: api/Film
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Film>> PostFilm(Film film)
+        public async Task<ActionResult<FilmDTO>> PostFilm(Film film)
         {
-            _context.Films.Add(film);
+            // _context.Films.Add(new Film {
+            //     Director = film.Director,
+            //     DirectorId = film.
+            // });
             await _context.SaveChangesAsync();
         
             return CreatedAtAction("GetFilm", new { id = film.Id }, film);
