@@ -29,42 +29,74 @@ namespace Project.Controllers
             return _greetingDependency.Greeting();
         }
 
-        // // GET: api/Film
+        // GET: api/Film
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<FilmDTO>>> GetFilms() {
+            var films = await _context.Films
+                .Include(film => film.Director)
+                .Include(film => film.FilmReviews)
+                .Select(film => new FilmDTO {
+                Titel = film.Titel,
+                Year = film.Year,
+                FilmReviews = film.FilmReviews.Select(review => new FilmReviewDTO {
+                    Score = review.Score,
+                    Description = review.Description,
+                    CreationDate = review.CreationDate,
+                    Username = review.Username,
+                }).ToList(),
+                Director = film.DirectorId != null ? new DirectorDTO { Name = film.Director.Name } : null
+            }).ToListAsync();
+            return films;
+        }
+        
+        // GET: api/Film/GetFilmsWithReviewCharacterCount150HigherAndLessThanYear
         // [HttpGet]
-        // public async Task<ActionResult<IEnumerable<FilmDTO>>> GetFilms() {
-        //     var films = await _context.Films.Include(film => film.Director).Select(film => new FilmDTO {
-        //         Titel = film.Titel,
-        //         Year = film.Year,
-        //         Regisseur = film.DirectorId != null ? new RegisseurDTO { Name = film.Director.Name } : null
-        //     }).ToListAsync();
-        //     // List<FilmDTO> filmDTOs = convertFilmsToDTO(films);
+        // public async Task<ActionResult<IEnumerable<FilmDTO>>> GetFilmsWithReviewCharacterCount150HigherAndLessThanYear() {
+        //     var films = await _context.Films
+        //         .Include(film => film.Director)
+        //         .Include(film => film.FilmReviews)
+        //         .Where(film => film.FilmReviews.Any(review => 
+        //                 review.Description.Length > 150 &&
+        //                 review.CreationDate >= DateTime.Today.AddYears(-1)))
+        //         .Select(film => new FilmDTO {
+        //             Titel = film.Titel,
+        //             Year = film.Year,
+        //             FilmReviews = film.FilmReviews
+        //                 .Select(review => new FilmReviewDTO {
+        //                 Score = review.Score,
+        //                 Description = review.Description,
+        //                 CreationDate = review.CreationDate,
+        //                 Username = review.Username,
+        //             }).ToList(),
+        //             Director = film.DirectorId != null ? new DirectorDTO { Name = film.Director.Name } : null
+        //         }).ToListAsync();
         //     return films;
         // }
 
-        // // GET: api/Film/5
-        // [HttpGet("{id}")]
-        // public async Task<ActionResult<FilmDTO>> GetFilm(long id)
-        // {
-        //     var film = await _context.Films.FindAsync(id);
-        //
-        //     if (film == null)
-        //     {
-        //         return NotFound();
-        //     }
-        //
-        //     FilmDTO returnFilm = new FilmDTO(){
-        //         Titel = film.Titel,
-        //         Year = film.Year,
-        //         FilmReviews = convertReviewsToDTO(film.FilmReviews.ToList()),
-        //     };
-        //
-        //     return returnFilm;
-        // }
+        // GET: api/Film/5
+        [HttpGet("{id}")]
+        public async Task<ActionResult<FilmDTO>> GetFilm(long id)
+        {
+            var film = await _context.Films.FindAsync(id);
+        
+            if (film == null)
+            {
+                return NotFound();
+            }
+        
+            FilmDTO returnFilm = new FilmDTO{
+                Titel = film.Titel,
+                Year = film.Year,
+                FilmReviews = convertReviewsToDTO(film.FilmReviews.ToList()),
+            };
+        
+            return returnFilm;
+        }
 
-        private List<ReviewDTO> convertReviewsToDTO (List<Review> reviews) {
-            List<ReviewDTO> reviewDTOs = new List<ReviewDTO>();
+        private List<FilmReviewDTO> convertReviewsToDTO (List<Review> reviews) {
+            List<FilmReviewDTO> reviewDTOs = new List<FilmReviewDTO>();
             foreach (Review review in reviews) {
-                reviewDTOs.Add(new ReviewDTO {
+                reviewDTOs.Add(new FilmReviewDTO {
                     Score = review.Score,
                     Description = review.Description,
                     CreationDate = review.CreationDate,
@@ -73,18 +105,6 @@ namespace Project.Controllers
             }
             return reviewDTOs;
         }
-
-        // private List<FilmDTO> convertFilmsToDTO (List<Film> films) {
-        //     List<FilmDTO> filmDTOs = [];
-        //     foreach (Film film in films) {
-        //         filmDTOs.Add(new FilmDTO(){
-        //             Titel = film.Titel,
-        //             Year = film.Year,
-        //             FilmReviews = convertReviewsToDTO(film.FilmReviews.ToList()),
-        //         });
-        //     }
-        //     return filmDTOs;
-        // }
 
         // PUT: api/Film/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
@@ -119,14 +139,14 @@ namespace Project.Controllers
 
         // POST: api/Film
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        // [HttpPost]
-        // public async Task<ActionResult<Film>> PostFilm(Film film)
-        // {
-        //     _context.Films.Add(film);
-        //     await _context.SaveChangesAsync();
-        //
-        //     return CreatedAtAction("GetFilm", new { id = film.Id }, film);
-        // }
+        [HttpPost]
+        public async Task<ActionResult<Film>> PostFilm(Film film)
+        {
+            _context.Films.Add(film);
+            await _context.SaveChangesAsync();
+        
+            return CreatedAtAction("GetFilm", new { id = film.Id }, film);
+        }
 
         // DELETE: api/Film/5
         [HttpDelete("{id}")]

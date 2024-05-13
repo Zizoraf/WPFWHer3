@@ -11,8 +11,8 @@ using Project.Data;
 namespace Project.Migrations
 {
     [DbContext(typeof(BioscoopContext))]
-    [Migration("20240513160859_Add information of Movies")]
-    partial class AddinformationofMovies
+    [Migration("20240513172146_Adding second part of mock info")]
+    partial class Addingsecondpartofmockinfo
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

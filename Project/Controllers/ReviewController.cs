@@ -31,15 +31,15 @@ namespace Project.Controllers
 
         // GET: api/Review
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ReviewDTO>>> GetReviews() {
+        public async Task<ActionResult<IEnumerable<FilmReviewDTO>>> GetReviews() {
             var reviews = await _context.Reviews.ToListAsync();
-            List<ReviewDTO> reviewDTOs = convertReviewsToDTO(reviews);
+            List<FilmReviewDTO> reviewDTOs = convertReviewsToDTO(reviews);
             return reviewDTOs;
         }
 
         // GET: api/Review/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<ReviewDTO>> GetReview(long id)
+        public async Task<ActionResult<FilmReviewDTO>> GetReview(long id)
         {
             var Review = await _context.Reviews.FindAsync(id);
 
@@ -48,20 +48,20 @@ namespace Project.Controllers
                 return NotFound();
             }
 
-            ReviewDTO returnReview = new ReviewDTO(){
+            FilmReviewDTO returnFilmReview = new FilmReviewDTO(){
                 Score = Review.Score,
                 Description = Review.Description,
                 CreationDate = Review.CreationDate,
                 Username = Review.Username,
             };
 
-            return returnReview;
+            return returnFilmReview;
         }
 
-        private List<ReviewDTO> convertReviewsToDTO (List<Review> reviews) {
-            List<ReviewDTO> reviewDTOs = new List<ReviewDTO>();
+        private List<FilmReviewDTO> convertReviewsToDTO (List<Review> reviews) {
+            List<FilmReviewDTO> reviewDTOs = new List<FilmReviewDTO>();
             foreach (Review review in reviews) {
-                reviewDTOs.Add(new ReviewDTO {
+                reviewDTOs.Add(new FilmReviewDTO {
                     Score = review.Score,
                     Description = review.Description,
                     CreationDate = review.CreationDate,

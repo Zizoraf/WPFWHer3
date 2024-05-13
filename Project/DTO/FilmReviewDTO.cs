@@ -1,4 +1,4 @@
-public class ReviewDTO
+public class FilmReviewDTO
 {
     public required int Score { get; set; }
     public required string Description { get; set; }

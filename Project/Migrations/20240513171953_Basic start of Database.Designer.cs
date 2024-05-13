@@ -11,8 +11,8 @@ using Project.Data;
 namespace Project.Migrations
 {
     [DbContext(typeof(BioscoopContext))]
-    [Migration("20240513143017_Fill Director with info")]
-    partial class FillDirectorwithinfo
+    [Migration("20240513171953_Basic start of Database")]
+    partial class BasicstartofDatabase
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -32,7 +32,7 @@ namespace Project.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Regisseurs");
+                    b.ToTable("Directors");
 
                     b.HasData(
                         new
@@ -73,7 +73,7 @@ namespace Project.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<long?>("DirectorId")
+                    b.Property<long>("DirectorId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Titel")
@@ -88,50 +88,6 @@ namespace Project.Migrations
                     b.HasIndex("DirectorId");
 
                     b.ToTable("Films");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1L,
-                            Titel = "The Shawshank Redemption",
-                            Year = 1994
-                        },
-                        new
-                        {
-                            Id = 2L,
-                            Titel = "The Godfather",
-                            Year = 1972
-                        },
-                        new
-                        {
-                            Id = 3L,
-                            Titel = "The Dark Knight",
-                            Year = 2008
-                        },
-                        new
-                        {
-                            Id = 4L,
-                            Titel = "The Godfather Part II",
-                            Year = 1974
-                        },
-                        new
-                        {
-                            Id = 5L,
-                            Titel = "12 Angry Men",
-                            Year = 1957
-                        },
-                        new
-                        {
-                            Id = 6L,
-                            Titel = "Schindler's List",
-                            Year = 1993
-                        },
-                        new
-                        {
-                            Id = 7L,
-                            Titel = "The Lord of the Rings: The Return of the King",
-                            Year = 2003
-                        });
                 });
 
             modelBuilder.Entity("Project.Models.Review", b =>
@@ -162,42 +118,17 @@ namespace Project.Migrations
                     b.HasIndex("FilmId");
 
                     b.ToTable("Reviews");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 4L,
-                            CreationDate = new DateTime(2024, 5, 13, 0, 0, 0, 0, DateTimeKind.Local),
-                            Description = "Nice",
-                            FilmId = 1L,
-                            Score = 4,
-                            Username = "PirateSoftware"
-                        },
-                        new
-                        {
-                            Id = 5L,
-                            CreationDate = new DateTime(2024, 5, 13, 0, 0, 0, 0, DateTimeKind.Local),
-                            Description = "Noice",
-                            FilmId = 1L,
-                            Score = 5,
-                            Username = "PirateSoftware"
-                        },
-                        new
-                        {
-                            Id = 6L,
-                            CreationDate = new DateTime(2024, 5, 13, 0, 0, 0, 0, DateTimeKind.Local),
-                            Description = "Super noice",
-                            FilmId = 1L,
-                            Score = 3,
-                            Username = "PirateSoftware"
-                        });
                 });
 
             modelBuilder.Entity("Project.Models.Film", b =>
                 {
-                    b.HasOne("Project.Models.Director", null)
+                    b.HasOne("Project.Models.Director", "Director")
                         .WithMany("Films")
-                        .HasForeignKey("DirectorId");
+                        .HasForeignKey("DirectorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Director");
                 });
 
             modelBuilder.Entity("Project.Models.Review", b =>

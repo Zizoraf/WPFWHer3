@@ -8,7 +8,7 @@ public class Film
     public long Id { get; set; }
     public required string Titel { get; set; }
     public required int Year { get; set; }
-    public ICollection<Review> FilmReviews { get; set; }
+    public ICollection<Review>? FilmReviews { get; set; }
     public long DirectorId { get; set; }
     public Director Director { get; set; } = null;
 }

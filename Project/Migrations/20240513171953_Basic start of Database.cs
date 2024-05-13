@@ -8,13 +8,13 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Project.Migrations
 {
     /// <inheritdoc />
-    public partial class AddedReviewandDirector : Migration
+    public partial class BasicstartofDatabase : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Regisseurs",
+                name: "Directors",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "INTEGER", nullable: false)
@@ -23,7 +23,7 @@ namespace Project.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Regisseurs", x => x.Id);
+                    table.PrimaryKey("PK_Directors", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -34,16 +34,17 @@ namespace Project.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     Titel = table.Column<string>(type: "TEXT", nullable: false),
                     Year = table.Column<int>(type: "INTEGER", nullable: false),
-                    DirectorId = table.Column<long>(type: "INTEGER", nullable: true)
+                    DirectorId = table.Column<long>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Films", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Films_Regisseurs_DirectorId",
+                        name: "FK_Films_Directors_DirectorId",
                         column: x => x.DirectorId,
-                        principalTable: "Regisseurs",
-                        principalColumn: "Id");
+                        principalTable: "Directors",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -70,27 +71,16 @@ namespace Project.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "Films",
-                columns: new[] { "Id", "DirectorId", "Titel", "Year" },
+                table: "Directors",
+                columns: new[] { "Id", "Name" },
                 values: new object[,]
                 {
-                    { 1L, null, "The Shawshank Redemption", 1994 },
-                    { 2L, null, "The Godfather", 1972 },
-                    { 3L, null, "The Dark Knight", 2008 },
-                    { 4L, null, "The Godfather Part II", 1974 },
-                    { 5L, null, "12 Angry Men", 1957 },
-                    { 6L, null, "Schindler's List", 1993 },
-                    { 7L, null, "The Lord of the Rings: The Return of the King", 2003 }
-                });
-
-            migrationBuilder.InsertData(
-                table: "Reviews",
-                columns: new[] { "Id", "CreationDate", "Description", "FilmId", "Score", "Username" },
-                values: new object[,]
-                {
-                    { 4L, new DateTime(2024, 5, 13, 0, 0, 0, 0, DateTimeKind.Local), "Nice", 1L, 4, "PirateSoftware" },
-                    { 5L, new DateTime(2024, 5, 13, 0, 0, 0, 0, DateTimeKind.Local), "Noice", 1L, 5, "PirateSoftware" },
-                    { 6L, new DateTime(2024, 5, 13, 0, 0, 0, 0, DateTimeKind.Local), "Super noice", 1L, 3, "PirateSoftware" }
+                    { 1L, "Frank Darabont" },
+                    { 2L, "Francis Ford Coppola" },
+                    { 3L, "Christopher Nolan" },
+                    { 5L, "Sidney Lumet" },
+                    { 6L, "Steven Spielberg" },
+                    { 7L, "Peter Jackson" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -114,7 +104,7 @@ namespace Project.Migrations
                 name: "Films");
 
             migrationBuilder.DropTable(
-                name: "Regisseurs");
+                name: "Directors");
         }
     }
 }
