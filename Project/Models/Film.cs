@@ -10,7 +10,7 @@ public class Film
     public long Id { get; set; }
     public required string Title { get; set; }
     public required int Year { get; set; }
-    public ICollection<Review>? FilmReviews { get; set; }
+    public virtual ICollection<Review>? FilmReviews { get; set; }
     public long DirectorId { get; set; }
-    public Director Director { get; set; } = null;
+    public virtual Director Director { get; set; } = null;
 }

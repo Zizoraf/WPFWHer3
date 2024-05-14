@@ -7,6 +7,6 @@ public class Director {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public long Id { get; set; }
-    public ICollection<Film> Films { get; set; }
+    public virtual ICollection<Film> Films { get; set; }
     public required string Name { get; set; }
 }

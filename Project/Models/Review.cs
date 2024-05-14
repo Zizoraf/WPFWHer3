@@ -10,7 +10,7 @@ public class Review
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public long Id { get; set; }
     public long FilmId { get; set; }
-    public Film Film { get; set; }
+    public virtual Film Film { get; set; }
     [Range(1, 5, ErrorMessage = "Value must be between 1 and 5")]
     public required int Score { get; set; }
     [MinLength(50, ErrorMessage = "Description needs at least 50 characters. ") ]

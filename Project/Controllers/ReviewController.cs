@@ -58,6 +58,16 @@ namespace Project.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutReview(long id, ReviewAddUpdateDTO reviewDto)
         {
+            if (reviewDto.Description.Length < 50)
+            {
+                throw new Exception("characters amount above 50 needed");
+            }
+
+            if (reviewDto.Score < 1 || reviewDto.Score > 5)
+            {
+                throw new Exception("score needed between 1 and 5");
+            }
+            
             var review = await _context.Reviews.FindAsync(id);
 
             review.Description = reviewDto.Description;
@@ -90,6 +100,16 @@ namespace Project.Controllers
         [HttpPost("{filmId}")]
         public async Task<ActionResult<ReviewDTO>> PostReview(long filmId, ReviewAddUpdateDTO reviewDto)
         {
+            if (reviewDto.Description.Length < 50)
+            {
+                throw new Exception("characters amount above 50 needed");
+            }
+
+            if (reviewDto.Score < 1 || reviewDto.Score > 5)
+            {
+                throw new Exception("score needed between 1 and 5");
+            }
+            
             var film = await _context.Films.FindAsync(filmId);
 
             if (film == null)
