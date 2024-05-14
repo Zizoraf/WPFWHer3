@@ -56,12 +56,20 @@ namespace Project.Controllers
         // PUT: api/Director/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutDirector(long id, Director director)
+        public async Task<IActionResult> PutDirector(long id, DirectorDTO directorDto)
         {
-            if (id != director.Id)
+            // if (id != director.Id)
+            // {
+            //     return BadRequest();
+            // }
+            
+            var director = await _context.Directors.FindAsync(id);
+            if (director == null)
             {
-                return BadRequest();
+                return NotFound();
             }
+
+            director.Name = directorDto.Name;
 
             _context.Entry(director).State = EntityState.Modified;
 
@@ -87,12 +95,16 @@ namespace Project.Controllers
         // POST: api/Director
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<DirectorDTO>> PostDirector(Director director)
+        public async Task<ActionResult<DirectorDTO>> PostDirector(DirectorDTO directorDto)
         {
+            Director director = new Director
+            {
+                Name = directorDto.Name
+            };
             _context.Directors.Add(director);
             await _context.SaveChangesAsync();
         
-            return CreatedAtAction("GetDirector", new { id = director.Id }, director);
+            return CreatedAtAction("GetDirector", new { id = director.Id }, directorDto);
         }
 
         // DELETE: api/Director/5
