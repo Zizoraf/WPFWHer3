@@ -135,7 +135,7 @@ namespace Project.Controllers
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost("{directorId}")]
 
-        public async Task<ActionResult<FilmDTO>> PostFilm(long directorId, FilmDTO filmDto) {
+        public async Task<ActionResult<FilmDTO>> PostFilm(long directorId, FilmAdd filmAdd) {
             var director = await _context.Directors.FindAsync(directorId);
 
             if (director == null)
@@ -144,15 +144,15 @@ namespace Project.Controllers
             }
             
             Film film = new Film {
-                Title = filmDto.Title,
-                Year = filmDto.Year,
+                Title = filmAdd.Title,
+                Year = filmAdd.Year,
                 DirectorId = directorId,
             };
             
             _context.Films.Add(film);
             await _context.SaveChangesAsync();
         
-            return CreatedAtAction("GetFilm", new { id = film.Id }, film);
+            return CreatedAtAction("GetFilm", new { id = film.Id }, filmAdd);
         }
 
         // DELETE: api/Film/5

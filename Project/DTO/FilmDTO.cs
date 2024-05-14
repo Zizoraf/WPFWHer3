@@ -12,3 +12,8 @@ public class FilmDtoEditNameAndYear(string title, int year) {
     public string Title { get; set; } = title;
     public int Year { get; set; } = year;
 }
+
+public class FilmAdd(string title, int year) {
+    public string Title { get; set; } = title;
+    public int Year { get; set; } = year;
+}

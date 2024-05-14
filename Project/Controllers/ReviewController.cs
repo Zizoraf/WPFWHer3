@@ -56,7 +56,7 @@ namespace Project.Controllers
         // // PUT: api/Review/5
         // // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutReview(long id, ReviewDTO reviewDto)
+        public async Task<IActionResult> PutReview(long id, ReviewAddUpdateDTO reviewDto)
         {
             var review = await _context.Reviews.FindAsync(id);
 
@@ -88,7 +88,7 @@ namespace Project.Controllers
         // POST: api/Review
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost("{filmId}")]
-        public async Task<ActionResult<ReviewDTO>> PostReview(long filmId, ReviewDTO reviewDto)
+        public async Task<ActionResult<ReviewDTO>> PostReview(long filmId, ReviewAddUpdateDTO reviewDto)
         {
             var film = await _context.Films.FindAsync(filmId);
 
@@ -101,7 +101,7 @@ namespace Project.Controllers
                 FilmId = filmId,
                 Score = reviewDto.Score,
                 Description = reviewDto.Description,
-                CreationDate = reviewDto.CreationDate,
+                CreationDate = DateTime.Today,
                 Username = reviewDto.Username
             };
             
