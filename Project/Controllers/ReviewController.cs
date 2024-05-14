@@ -16,10 +16,15 @@ namespace Project.Controllers
     {
         private readonly BioscoopContext _context;
         private readonly IGreetingDependency _greetingDependency;
-        public ReviewController(BioscoopContext context, IGreetingDependency greetingDependency)
+        private readonly IReviewDependency _reviewDependency;
+        public ReviewController(BioscoopContext context)
         {
             _context = context;
-            _greetingDependency = greetingDependency;
+        }
+        
+        public ReviewController(IReviewDependency context)
+        {
+            _reviewDependency = context;
         }
 
         // GET: api/Review
@@ -69,6 +74,11 @@ namespace Project.Controllers
             }
             
             var review = await _context.Reviews.FindAsync(id);
+            
+            if (review == null)
+            {
+                return NotFound();
+            }
 
             review.Description = reviewDto.Description;
             review.Username = reviewDto.Username;

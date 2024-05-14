@@ -48,9 +48,9 @@ public class BioscoopContext : DbContext //https://learn.microsoft.com/en-us/asp
         );
     }
 
-    public DbSet<Director> Directors { get; set; }
-    public DbSet<Film> Films { get; set; }
-    public DbSet<Review> Reviews { get; set; }
+    public virtual DbSet<Director> Directors { get; set; }
+    public virtual DbSet<Film> Films { get; set; }
+    public virtual DbSet<Review> Reviews { get; set; }
 
     public Director CreateRegisseur(long id, string name){
         return new Director {Id = id, Name = name};
