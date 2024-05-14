@@ -1,7 +1,7 @@
-public class ReviewDTO
+public class ReviewDTO (int score, string description, DateTime creationDate, string username)
 {
-    public required int Score { get; set; }
-    public required string Description { get; set; }
-    public DateTime CreationDate { get; set; } = DateTime.Today;
-    public required string Username { get; set; }
+    public int Score { get; set; } = score;
+    public string Description { get; set; } = description;
+    public DateTime CreationDate { get; set; } = creationDate;
+    public string Username { get; set; } = username;
 }

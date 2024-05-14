@@ -1,5 +1,6 @@
 using Project.Models;
 
-public class DirectorDTO {
-    public required string Name { get; set; }
+public class DirectorDTO (string name)
+{
+    public string Name { get; set; } = name;
 }

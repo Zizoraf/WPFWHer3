@@ -35,17 +35,10 @@ namespace Project.Controllers
             var films = await _context.Films
                 .Include(film => film.Director)
                 .Include(film => film.FilmReviews)
-                .Select(film => new FilmDTO {
-                Titel = film.Titel,
-                Year = film.Year,
-                FilmReviews = film.FilmReviews.Select(review => new ReviewDTO {
-                    Score = review.Score,
-                    Description = review.Description,
-                    CreationDate = review.CreationDate,
-                    Username = review.Username,
-                }).ToList(),
-                Director = film.DirectorId != null ? new DirectorDTO { Name = film.Director.Name } : null
-            }).ToListAsync();
+                .Select(film => new FilmDTO (film.Titel,film.Year, 
+                    film.FilmReviews.Select(review => new ReviewDTO (review.Score, review.Description, review.CreationDate, review.Username)).ToList(),
+                new DirectorDTO (film.Director.Name )
+            )).ToListAsync();
             return films;
         }
         
@@ -56,17 +49,10 @@ namespace Project.Controllers
                 .Include(film => film.Director)
                 .Include(film => film.FilmReviews)
                 .Where(film => film.FilmReviews.Count > 0)
-                .Select(film => new FilmDTO {
-                    Titel = film.Titel,
-                    Year = film.Year,
-                    FilmReviews = film.FilmReviews.Select(review => new ReviewDTO {
-                        Score = review.Score,
-                        Description = review.Description,
-                        CreationDate = review.CreationDate,
-                        Username = review.Username,
-                    }).ToList(),
-                    Director = film.DirectorId != null ? new DirectorDTO { Name = film.Director.Name } : null
-                }).ToListAsync();
+                .Select(film => new FilmDTO (film.Titel, film.Year,
+                    film.FilmReviews.Select(review => new ReviewDTO (review.Score, review.Description, review.CreationDate, review.Username)).ToList(),
+                    new DirectorDTO (film.Director.Name)
+                )).ToListAsync();
             return films;
         }
         
@@ -79,18 +65,12 @@ namespace Project.Controllers
                 .Where(film => film.FilmReviews.Any(review => 
                         review.Description.Length > 150 &&
                         review.CreationDate >= DateTime.Today.AddYears(-1)))
-                .Select(film => new FilmDTO {
-                    Titel = film.Titel,
-                    Year = film.Year,
-                    FilmReviews = film.FilmReviews
-                        .Select(review => new ReviewDTO {
-                        Score = review.Score,
-                        Description = review.Description,
-                        CreationDate = review.CreationDate,
-                        Username = review.Username,
-                    }).ToList(),
-                    Director = film.DirectorId != null ? new DirectorDTO { Name = film.Director.Name } : null
-                }).ToListAsync();
+                .Select(film => new FilmDTO (film.Titel, film.Year,
+                    film.FilmReviews.Select(review => 
+                        new ReviewDTO (review.Score, review.Description, review.CreationDate, review.Username
+                    )).ToList(),
+                    new DirectorDTO (film.Director.Name)
+                )).ToListAsync();
             return films;
         }
 
@@ -98,33 +78,23 @@ namespace Project.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<FilmDTO>> GetFilm(long id)
         {
-            var film = await _context.Films.FindAsync(id);
+            var film = await _context.Films
+                .Include(film => film.Director)
+                .Include(film => film.FilmReviews)
+                .Where(film => film.Id == id)
+                .Select(film => new FilmDTO (film.Titel, film.Year,
+                    film.FilmReviews
+                        .Select(review => new ReviewDTO (review.Score, review.Description, review.CreationDate, review.Username)).ToList(),
+                    new DirectorDTO (film.Director.Name )
+                    
+                )).FirstOrDefaultAsync();
         
             if (film == null)
             {
                 return NotFound();
             }
         
-            FilmDTO returnFilm = new FilmDTO{
-                Titel = film.Titel,
-                Year = film.Year,
-                FilmReviews = convertReviewsToDTO(film.FilmReviews.ToList()),
-            };
-        
-            return returnFilm;
-        }
-
-        private List<ReviewDTO> convertReviewsToDTO (List<Review> reviews) {
-            List<ReviewDTO> reviewDTOs = new List<ReviewDTO>();
-            foreach (Review review in reviews) {
-                reviewDTOs.Add(new ReviewDTO {
-                    Score = review.Score,
-                    Description = review.Description,
-                    CreationDate = review.CreationDate,
-                    Username = review.Username
-                });
-            }
-            return reviewDTOs;
+            return film;
         }
 
         // PUT: api/Film/5
@@ -163,10 +133,7 @@ namespace Project.Controllers
         [HttpPost]
         public async Task<ActionResult<FilmDTO>> PostFilm(Film film)
         {
-            // _context.Films.Add(new Film {
-            //     Director = film.Director,
-            //     DirectorId = film.
-            // });
+            _context.Films.Add(film);
             await _context.SaveChangesAsync();
         
             return CreatedAtAction("GetFilm", new { id = film.Id }, film);

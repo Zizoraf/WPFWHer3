@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Newtonsoft.Json;
 
 namespace Project.Models;
@@ -6,6 +7,7 @@ namespace Project.Models;
 public class Review
 {
     [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public long Id { get; set; }
     public long FilmId { get; set; }
     public Film Film { get; set; }
