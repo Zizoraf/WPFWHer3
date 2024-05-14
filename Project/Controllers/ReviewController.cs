@@ -87,13 +87,24 @@ namespace Project.Controllers
 
         // POST: api/Review
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<ReviewDTO>> PostReview(Review review) {
-            bool idInD = _context.Reviews.Any(r => r.Id == review.Id);
+        [HttpPost("{filmId}")]
+        public async Task<ActionResult<ReviewDTO>> PostReview(long filmId, ReviewDTO reviewDto)
+        {
+            var film = await _context.Films.FindAsync(filmId);
 
-            if (idInD) {
-                throw new Exception("Can't put data in DB, id already exits");
+            if (film == null)
+            {
+                throw new Exception("filmId doesn't exist");
             }
+            
+            Review review = new Review {
+                FilmId = filmId,
+                Score = reviewDto.Score,
+                Description = reviewDto.Description,
+                CreationDate = reviewDto.CreationDate,
+                Username = reviewDto.Username
+            };
+            
             
             _context.Reviews.Add(review);
             await _context.SaveChangesAsync();

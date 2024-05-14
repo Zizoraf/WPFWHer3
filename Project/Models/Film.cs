@@ -8,7 +8,7 @@ public class Film
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public long Id { get; set; }
-    public required string Titel { get; set; }
+    public required string Title { get; set; }
     public required int Year { get; set; }
     public ICollection<Review>? FilmReviews { get; set; }
     public long DirectorId { get; set; }

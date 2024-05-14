@@ -56,7 +56,7 @@ public class BioscoopContext : DbContext //https://learn.microsoft.com/en-us/asp
         return new Director {Id = id, Name = name};
     }
     public Film CreateFilm(long id, string titel, int year, long directorId){
-        return new Film { Id = id, Titel = titel, Year = year, DirectorId = directorId };
+        return new Film { Id = id, Title = titel, Year = year, DirectorId = directorId };
     }
 
     public Review CreateReview(long id, long filmId, int score, string description, string username){
