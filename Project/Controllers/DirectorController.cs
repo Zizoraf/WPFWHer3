@@ -58,11 +58,6 @@ namespace Project.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutDirector(long id, DirectorDTO directorDto)
         {
-            // if (id != director.Id)
-            // {
-            //     return BadRequest();
-            // }
-            
             var director = await _context.Directors.FindAsync(id);
             if (director == null)
             {

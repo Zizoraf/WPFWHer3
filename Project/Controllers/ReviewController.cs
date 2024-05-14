@@ -31,8 +31,9 @@ namespace Project.Controllers
 
         // GET: api/Review
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Review>>> GetReviews() {
-            var reviews = await _context.Reviews.ToListAsync();
+        public async Task<ActionResult<IEnumerable<ReviewDTO>>> GetReviews() {
+            var reviews = await _context.Reviews
+                .Select(review => new ReviewDTO(review.Score, review.Description, review.CreationDate, review.Username)).ToListAsync();;
             return reviews;
         }
         
@@ -55,13 +56,14 @@ namespace Project.Controllers
         // // PUT: api/Review/5
         // // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutReview(long id, Review review)
+        public async Task<IActionResult> PutReview(long id, ReviewDTO reviewDto)
         {
-            if (id != review.Id)
-            {
-                return BadRequest();
-            }
-        
+            var review = await _context.Reviews.FindAsync(id);
+
+            review.Description = reviewDto.Description;
+            review.Username = reviewDto.Username;
+            review.Score = reviewDto.Score;
+            
             _context.Entry(review).State = EntityState.Modified;
         
             try
