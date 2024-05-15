@@ -33,7 +33,7 @@ namespace Project.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<DirectorDTO>>> GetDirectors() {
             var directors = await _context.Directors
-                .Select(director => new DirectorDTO (director.Name)).ToListAsync();
+                .Select(director => new DirectorDTO (director.Id, director.Name)).ToListAsync();
             return directors;
         }
 
@@ -48,7 +48,7 @@ namespace Project.Controllers
                 return NotFound();
             }
 
-            DirectorDTO returnDirector = new DirectorDTO(director.Name);
+            DirectorDTO returnDirector = new DirectorDTO(director.Id, director.Name);
         
             return returnDirector;
         }

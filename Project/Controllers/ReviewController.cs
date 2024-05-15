@@ -38,7 +38,7 @@ namespace Project.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ReviewDTO>>> GetReviews() {
             var reviews = await _context.Reviews
-                .Select(review => new ReviewDTO(review.Score, review.Description, review.CreationDate, review.Username)).ToListAsync();;
+                .Select(review => new ReviewDTO(review.Id, review.Score, review.Description, review.CreationDate, review.Username)).ToListAsync();;
             return reviews;
         }
         
@@ -53,7 +53,7 @@ namespace Project.Controllers
                 return NotFound();
             }
         
-            ReviewDTO returnReview = new ReviewDTO(Review.Score, Review.Description, Review.CreationDate, Review.Username);
+            ReviewDTO returnReview = new ReviewDTO(Review.Id, Review.Score, Review.Description, Review.CreationDate, Review.Username);
         
             return returnReview;
         }
@@ -139,7 +139,7 @@ namespace Project.Controllers
             _context.Reviews.Add(review);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetReview", new { id = review.Id }, new ReviewDTO (review.Score, review.Description, review.CreationDate, review.Username));
+            return CreatedAtAction("GetReview", new { id = review.Id }, new ReviewDTO (review.Id, review.Score, review.Description, review.CreationDate, review.Username));
         }
 
         // DELETE: api/Review/5

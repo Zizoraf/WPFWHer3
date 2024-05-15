@@ -1,5 +1,6 @@
-public class ReviewDTO (int score, string description, DateTime creationDate, string username)
+public class ReviewDTO (long id, int score, string description, DateTime creationDate, string username)
 {
+    public long Id { get; set; } = id;
     public int Score { get; set; } = score;
     public string Description { get; set; } = description;
     public DateTime CreationDate { get; set; } = creationDate;

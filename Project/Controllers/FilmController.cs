@@ -36,9 +36,9 @@ namespace Project.Controllers
             var films = await _context.Films
                 .Include(film => film.Director)
                 .Include(film => film.FilmReviews)
-                .Select(film => new FilmDTO (film.Title,film.Year, 
-                    film.FilmReviews.Select(review => new ReviewDTO (review.Score, review.Description, review.CreationDate, review.Username)).ToList(),
-                new DirectorDTO (film.Director.Name )
+                .Select(film => new FilmDTO (film.Id, film.Title,film.Year, 
+                    film.FilmReviews.Select(review => new ReviewDTO (review.Id, review.Score, review.Description, review.CreationDate, review.Username)).ToList(),
+                new DirectorDTO (film.Director.Id, film.Director.Name )
             )).ToListAsync();
             return films;
         }
@@ -50,9 +50,9 @@ namespace Project.Controllers
                 .Include(film => film.Director)
                 .Include(film => film.FilmReviews)
                 .Where(film => film.FilmReviews.Count > 0)
-                .Select(film => new FilmDTO (film.Title, film.Year,
-                    film.FilmReviews.Select(review => new ReviewDTO (review.Score, review.Description, review.CreationDate, review.Username)).ToList(),
-                    new DirectorDTO (film.Director.Name)
+                .Select(film => new FilmDTO (film.Id, film.Title, film.Year,
+                    film.FilmReviews.Select(review => new ReviewDTO (review.Id, review.Score, review.Description, review.CreationDate, review.Username)).ToList(),
+                    new DirectorDTO (film.Director.Id, film.Director.Name)
                 )).ToListAsync();
             return films;
         }
@@ -66,11 +66,11 @@ namespace Project.Controllers
                 .Where(film => film.FilmReviews.Any(review => 
                         review.Description.Length > 150 &&
                         review.CreationDate >= DateTime.Today.AddYears(-1)))
-                .Select(film => new FilmDTO (film.Title, film.Year,
+                .Select(film => new FilmDTO (film.Id, film.Title, film.Year,
                     film.FilmReviews.Select(review => 
-                        new ReviewDTO (review.Score, review.Description, review.CreationDate, review.Username
+                        new ReviewDTO (review.Id, review.Score, review.Description, review.CreationDate, review.Username
                     )).ToList(),
-                    new DirectorDTO (film.Director.Name)
+                    new DirectorDTO (film.Director.Id, film.Director.Name)
                 )).ToListAsync();
             return films;
         }
@@ -83,10 +83,10 @@ namespace Project.Controllers
                 .Include(film => film.Director)
                 .Include(film => film.FilmReviews)
                 .Where(film => film.Id == id)
-                .Select(film => new FilmDTO (film.Title, film.Year,
+                .Select(film => new FilmDTO (film.Id, film.Title, film.Year,
                     film.FilmReviews
-                        .Select(review => new ReviewDTO (review.Score, review.Description, review.CreationDate, review.Username)).ToList(),
-                    new DirectorDTO (film.Director.Name )
+                        .Select(review => new ReviewDTO (review.Id, review.Score, review.Description, review.CreationDate, review.Username)).ToList(),
+                    new DirectorDTO (film.Director.Id, film.Director.Name )
                     
                 )).FirstOrDefaultAsync();
         
