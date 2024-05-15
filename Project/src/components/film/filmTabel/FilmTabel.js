@@ -19,6 +19,16 @@ function FilmTabel({tableData}) {
                   <td>{item.title}</td>
                   <td>{item.year}</td>
                   <td>{item.director.name}</td>
+                  <td>
+                      <ul>
+                          {item.filmReviews.map((review, index) => (
+                              <li key={index}>
+                                  <strong>{review.username}: </strong>
+                                  {review.description}
+                              </li>
+                          ))}
+                      </ul>
+                  </td>
               </tr>
           ))}
         </tbody>

@@ -101,7 +101,7 @@ namespace Project.Controllers
         // PUT: api/Film/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutFilm(long id, FilmDtoEditNameAndYear FilmDtoEditNameAndYear)
+        public async Task<IActionResult> PutFilm(long id, FilmDtoEditNameAndYear FilmDtoEditNameAndYear) //mock make special without entry
         {
             var film = await _context.Films.FindAsync(id);
             if (film == null) {
