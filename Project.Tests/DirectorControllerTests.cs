@@ -21,16 +21,16 @@ public class DirectorControllerTests
     }
 
     [Fact]
-    public async Task GetDirectors()
+    public async Task GetDirector()
     {
         var director = new List<Director>()
         {
-            new() { Id = 1, Name = "Henk", Films = new List<Film>()},
-            new() { Id = 1, Name = "Ruttie", Films = new List<Film>()},
-            new() { Id = 1, Name = "Bartolomeo", Films = new List<Film>()},
-        }.AsQueryable();
+            new() { Id = 1, Name = "Henk", Films = new List<Film>() },
+            new() { Id = 2, Name = "Ruttie", Films = new List<Film>() },
+            new() { Id = 3, Name = "Bartolomeo", Films = new List<Film>() },
+        };
 
-        _mock.Setup(ctx => ctx.Directors).Returns(DbSetMock.Create(director));
+        _mock.Setup(ctx => ctx.Directors).Returns(DbSetMock.Create(director.AsQueryable()));
 
         DirectorController controller = new DirectorController(_mock.Object, _mockGreeting.Object);
 
@@ -38,6 +38,27 @@ public class DirectorControllerTests
 
         var actionResult = Assert.IsType<ActionResult<DirectorDTO>>(result);
         var directorDto = Assert.IsAssignableFrom<DirectorDTO>(actionResult.Value);
-        Assert.Equal(directorDto.Name, "Henk");
+        Assert.Equal(directorDto.Name, director[0].Name);
+    }
+    
+    [Fact]
+    public async Task GetDirectors()
+    {
+        var director = new List<Director>()
+        {
+            new() { Id = 1, Name = "Henk", Films = new List<Film>() },
+            new() { Id = 2, Name = "Ruttie", Films = new List<Film>() },
+            new() { Id = 3, Name = "Bartolomeo", Films = new List<Film>() },
+        };
+
+        _mock.Setup(ctx => ctx.Directors).Returns(DbSetMock.Create(director.AsQueryable()));
+
+        DirectorController controller = new DirectorController(_mock.Object, _mockGreeting.Object);
+
+        var result = await controller.GetDirectors();
+
+        var actionResult = Assert.IsType<ActionResult<List<DirectorDTO>>>(result);
+        var directorDto = Assert.IsAssignableFrom<List<DirectorDTO>>(actionResult.Value);
+        Assert.Equal(directorDto.Count(), director.Count);
     }
 }
