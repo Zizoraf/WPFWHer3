@@ -88,19 +88,19 @@ namespace Project.Controllers
                         .Select(review => new ReviewDTO (review.Id, review.Score, review.Description, review.CreationDate, review.Username)).ToList(),
                     new DirectorDTO (film.Director.Id, film.Director.Name )
                     
-                )).FirstOrDefaultAsync();
+                )).ToListAsync();
         
             if (film == null)
             {
                 return NotFound();
             }
         
-            return film;
+            return film[0];
         }
 
         // PUT: api/Film/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
+        [HttpPut("{id}/Mocktest")]
         public async Task<IActionResult> PutFilm(long id, FilmDtoEditNameAndYear FilmDtoEditNameAndYear) //mock make special without entry
         {
             var film = await _context.Films.FindAsync(id);
@@ -131,17 +131,50 @@ namespace Project.Controllers
 
             return NoContent();
         }
+        
+        // PUT: api/Film/5
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutFilmMockTest(long id, FilmDtoEditNameAndYear FilmDtoEditNameAndYear) //mock make special without entry
+        {
+            var film = await _context.Films.FindAsync(id);
+            if (film == null) {
+                return BadRequest();
+            }
+        
+            film.Title = FilmDtoEditNameAndYear.Title;
+            film.Year = FilmDtoEditNameAndYear.Year;
+        
+            // _context.Entry(film).State = EntityState.Modified;
+        
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!FilmExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+        
+            return NoContent();
+        }
 
         // POST: api/Film
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost("{directorId}")]
-
         public async Task<ActionResult<FilmDTO>> PostFilm(long directorId, FilmAdd filmAdd) {
             var director = await _context.Directors.FindAsync(directorId);
 
             if (director == null)
             {
-                throw new Exception("filmId doesn't exist");
+                throw new Exception("directorId doesn't exist");
             }
             
             Film film = new Film {

@@ -86,15 +86,50 @@ namespace Project.Controllers
 
             return NoContent();
         }
+        
+        // PUT: api/Director/5
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpPut("{id}/Mocktest")]
+        public async Task<IActionResult> PutDirectorMock(long id, DirectorDTO directorDto)
+        {
+            var director = await _context.Directors.FindAsync(id);
+            if (director == null)
+            {
+                return NotFound();
+            }
+
+            director.Name = directorDto.Name;
+
+            // _context.Entry(director).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!DirectorExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
+        }
 
         // POST: api/Director
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<DirectorDTO>> PostDirector(DirectorDTO directorDto)
         {
-            Director director = new Director
-            {
-                Name = directorDto.Name
+            Director director = new Director {
+                Id = directorDto.Id,
+                Name = directorDto.Name,
+                Films = new List<Film>()
             };
             _context.Directors.Add(director);
             await _context.SaveChangesAsync();
