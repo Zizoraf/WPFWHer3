@@ -23,7 +23,6 @@
   height: 1024px;
   display: flex;
   overflow: hidden;
-  position: absolute;
   align-items: flex-start;
   flex-shrink: 0;
   border-color: rgba(224, 224, 224, 1);
