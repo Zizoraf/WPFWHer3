@@ -1,33 +1,32 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './components/app/App';
-import reportWebVitals from './reportWebVitals';
+import React from 'react'
+import ReactDOM from 'react-dom'
 import {
-  createBrowserRouter,
-  RouterProvider,
-} from "react-router-dom";
-import Film from './components/film/Film';
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  Redirect,
+} from 'react-router-dom'
 
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <Film/>,
-  },
-  {
-    path: "/app",
-    element: <App/>,
-  },
-]);
+import './style.css'
+import Wireframe1 from './views/wireframe1'
+import Wireframe2 from './views/wireframe2'
+import Wireframe3 from './views/wireframe3'
+import Wireframe4 from './views/wireframe4'
+import NotFound from './views/not-found'
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-  <React.StrictMode>
-    <RouterProvider router={router} />
-  </React.StrictMode>
-);
+const App = () => {
+  return (
+    <Router>
+      <Switch>
+        <Route component={Wireframe1} exact path="/" />
+        <Route component={Wireframe2} exact path="/wireframe2" />
+        <Route component={Wireframe3} exact path="/wireframe3" />
+        <Route component={Wireframe4} exact path="/wireframe4" />
+        <Route component={NotFound} path="**" />
+        <Redirect to="**" />
+      </Switch>
+    </Router>
+  )
+}
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+ReactDOM.render(<App />, document.getElementById('app'))
