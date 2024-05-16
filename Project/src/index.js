@@ -18,7 +18,7 @@ const App = () => {
     <Router>
       <Switch>
         <Route component={browse} exact path="/" />
-        {/*<Route component={GetFilm} exact path="/film" />*/}
+        <Route component={GetFilm} exact path="/GetFilm/:id" />
         <Route component={NotFound} path="**" />
         <Redirect to="**" />
       </Switch>

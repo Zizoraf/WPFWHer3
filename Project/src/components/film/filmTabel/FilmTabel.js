@@ -33,12 +33,12 @@ function FilmTabel({tableData}) {
                   </div>
                 </td>
                 <td className="alignCenter">
-                  <Link to={`/lookUpFilm/${item.id}`}>
+                  <Link to={`/GetFilm/${item.id}`}>
                     <div className="reviewButton">Review</div>
                   </Link>
                 </td>
                 <td className="alignCenter">
-                  <Link to={`/editFilm/${item.id}`}>
+                  <Link to={`/GetFilm/${item.id}`}>
                     <div className="editButton">Edit</div>
                   </Link>
                 </td>
