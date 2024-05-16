@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet'
 
-import './wireframe1.css'
-import './Wireframe1Manual.css'
+import './browse.css'
 import FilmTabel from "../components/film/filmTabel/FilmTabel";
 import SideBar from "./sideBar";
 
@@ -12,14 +11,18 @@ const Browse = (props) => {
       <Helmet>
         <title>Movie reviewer</title>
       </Helmet>
-      <SideBar></SideBar>
-      <Film></Film>
+      <SideBar />
+      <div className="mainContainer">
+          <div className="TitleText">Search Movie</div>
+          <div>Movie name</div>
+          <Film></Film>
+      </div>
     </body>
   )
 }
 
 function Film() {
-  const [data, setFilms] = useState([]);
+    const [data, setFilms] = useState([]);
 
   useEffect(() => {
     const fetchFilms = async () => {

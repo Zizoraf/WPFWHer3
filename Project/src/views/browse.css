@@ -4,13 +4,13 @@
     height: 100%;
 }
 
-.sideContainer{
-    width: 120px;
-    height: 100%;
-}
-
 .mainContainer{
-    width: 80%;
+    width: 75%;
     height: 100%;
     background-color: #F0EFF4;
+    padding: 20px;
+}
+
+.emptySpace{
+    margin: 5px;
 }
