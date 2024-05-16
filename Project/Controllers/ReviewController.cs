@@ -104,6 +104,53 @@ namespace Project.Controllers
         
             return NoContent();
         }
+        
+        // // PUT: api/Review/5
+        // // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpPut("{id}/MockTest")]
+        public async Task<IActionResult> PutReviewMock(long id, ReviewAddUpdateDTO reviewDto)
+        {
+            if (reviewDto.Description.Length < 50)
+            {
+                throw new Exception("characters amount above 50 needed");
+            }
+
+            if (reviewDto.Score < 1 || reviewDto.Score > 5)
+            {
+                throw new Exception("score needed between 1 and 5");
+            }
+            
+            var review = await _context.Reviews.FindAsync(id);
+            
+            if (review == null)
+            {
+                return NotFound();
+            }
+
+            review.Description = reviewDto.Description;
+            review.Username = reviewDto.Username;
+            review.Score = reviewDto.Score;
+            
+            // _context.Entry(review).State = EntityState.Modified;
+        
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!ReviewExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+        
+            return NoContent();
+        }
 
         // POST: api/Review
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754

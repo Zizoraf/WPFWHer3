@@ -1,52 +1,26 @@
 ﻿using System.Text.Json;
 
-internal class AsyncEnumerator<T> : IAsyncEnumerator<T>, IAsyncDisposable, IDisposable
+namespace Project.Tests.HelpTestScripts; 
+
+internal class TestAsyncEnumerator<T> : IAsyncEnumerator<T>
 {
-    private readonly IEnumerator<T> enumerator;
+    private readonly IEnumerator<T> _inner;
 
-    private Utf8JsonWriter? _jsonWriter = new(new MemoryStream());
-
-    public void Dispose()
+    public TestAsyncEnumerator(IEnumerator<T> inner)
     {
-        Dispose(disposing: true);
-        GC.SuppressFinalize(this);
+        _inner = inner;
     }
 
-    public async ValueTask DisposeAsync()
+    public ValueTask<bool> MoveNextAsync()
     {
-        await DisposeAsyncCore().ConfigureAwait(false);
-
-        Dispose(disposing: false);
-#pragma warning disable CA1816 // Dispose methods should call SuppressFinalize
-
-        GC.SuppressFinalize(this);
-#pragma warning restore CA1816 // Dispose methods should call SuppressFinalize
+        return new ValueTask<bool>(_inner.MoveNext());
     }
 
-    protected virtual void Dispose(bool disposing)
+    public T Current => _inner.Current;
+
+    public ValueTask DisposeAsync()
     {
-        if (disposing)
-        {
-            _jsonWriter?.Dispose();
-            _jsonWriter = null;
-        }
+        _inner.Dispose();
+        return default;
     }
-
-    protected virtual async ValueTask DisposeAsyncCore()
-    {
-        if (_jsonWriter is not null)
-        {
-            await _jsonWriter.DisposeAsync().ConfigureAwait(false);
-        }
-
-        _jsonWriter = null;
-    }
-
-    public AsyncEnumerator(IEnumerator<T> enumerator) =>
-        this.enumerator = enumerator ?? throw new ArgumentNullException();
-
-    public T Current => enumerator.Current;
-
-    public ValueTask<bool> MoveNextAsync() =>
-        new ValueTask<bool>(enumerator.MoveNext());
 }
