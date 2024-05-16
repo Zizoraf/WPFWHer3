@@ -4,18 +4,55 @@
   
   .custom-table {
     width: 100%;
-    border-collapse: collapse;
     border: 1px solid #ddd;
+    border-radius: 5px;
   }
   
   .custom-table th,
   .custom-table td {
+    font-size: 16px;
     padding: 10px;
-    text-align: left;
     border-bottom: 1px solid #ddd;
+  }
+    
+  .leftSideTable{
+    text-align: left;
+  }
+
+.alignCenter{
+  text-align: center;
+}
+  
+  .rightSideTable{
+    text-align: right;
   }
   
   .custom-table th {
-    background-color: #f5f5f5;
     font-weight: bold;
+    color: #828282;
   }
+  
+  .averageReviewWithStar{
+    display: flex;
+    justify-content: end;
+  }
+  
+  .reviewButton{
+    background-color: #D1D770;
+    border-radius: 5px;
+  }
+
+.reviewButton:hover{
+  background-color: #C2C940;
+}
+
+.editButton{
+  background-color: #99DFFF;
+  border-radius: 5px;
+}
+
+.editButton:hover{
+  background-color: #5CCBFF;
+}
+
+  

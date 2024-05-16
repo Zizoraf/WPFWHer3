@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet'
 
-import './browse.css'
+import '../components/app/App.css'
 import FilmTabel from "../components/film/filmTabel/FilmTabel";
 import SideBar from "./sideBar";
 
@@ -13,8 +13,8 @@ const Browse = (props) => {
       </Helmet>
       <SideBar />
       <div className="mainContainer">
-          <div className="TitleText">Search Movie</div>
-          <div>Movie name</div>
+          <h1 className="TitleText">Search Movie</h1>
+          <h2 className="SecondaryText">Movie name</h2>
           <Film></Film>
       </div>
     </body>
