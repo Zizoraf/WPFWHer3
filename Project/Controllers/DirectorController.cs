@@ -127,7 +127,6 @@ namespace Project.Controllers
         public async Task<ActionResult<DirectorDTO>> PostDirector(DirectorDTO directorDto)
         {
             Director director = new Director {
-                Id = directorDto.Id,
                 Name = directorDto.Name,
                 Films = new List<Film>()
             };

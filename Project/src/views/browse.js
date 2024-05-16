@@ -27,7 +27,7 @@ function Film() {
   useEffect(() => {
     const fetchFilms = async () => {
       try {
-        const response = await fetch('http://localhost:5274/api/Film');
+        const response = await fetch('https://localhost:7281/api/Film');
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }

@@ -26,7 +26,7 @@ function GetFilmFromID() {
     useEffect(() => {
         const fetchFilmId = async () => {
             try {
-                const response = await fetch(`http://localhost:5274/api/Film/${id}`);
+                const response = await fetch(`https://localhost:7281/api/Film/${id}`);
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }

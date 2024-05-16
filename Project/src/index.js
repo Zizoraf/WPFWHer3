@@ -12,6 +12,7 @@ import browse from './views/browse'
 import NotFound from './views/not-found'
 import Film from "./components/film/Film";
 import GetFilm from "./views/GetFilm";
+import AddDirector from "./views/AddDirector";
 
 const App = () => {
   return (
@@ -19,6 +20,7 @@ const App = () => {
       <Switch>
         <Route component={browse} exact path="/" />
         <Route component={GetFilm} exact path="/GetFilm/:id" />
+        <Route component={AddDirector} exact path="/AddDirector/" />
         <Route component={NotFound} path="**" />
         <Redirect to="**" />
       </Switch>

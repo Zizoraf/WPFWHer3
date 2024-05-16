@@ -45,9 +45,9 @@ public class FilmControllerTests
 
         var result = await controller.GetFilmsWithReviews();
 
-        var actionResult = Assert.IsType<ActionResult<IEnumerable<FilmDTO>>>(result);
-        var filmDto = Assert.IsAssignableFrom<IEnumerable<FilmDTO>>(actionResult.Value);
-        Assert.Equal(filmDto.Count(), 3);
+        var actionResult = Assert.IsType<ActionResult<FilmDTO>>(result);
+        var filmDto = Assert.IsAssignableFrom<FilmDTO>(actionResult.Value);
+        Assert.Equal(filmDto.Id, 1);
     }
     
     [Fact]
