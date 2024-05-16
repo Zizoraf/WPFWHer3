@@ -10,9 +10,9 @@ import {
 import './style.css'
 import browse from './views/browse'
 import NotFound from './views/not-found'
-import Film from "./components/film/Film";
 import GetFilm from "./views/GetFilm";
 import AddDirector from "./views/AddDirector";
+import AddMovie from "./views/AddMovie";
 
 const App = () => {
   return (
@@ -21,6 +21,7 @@ const App = () => {
         <Route component={browse} exact path="/" />
         <Route component={GetFilm} exact path="/GetFilm/:id" />
         <Route component={AddDirector} exact path="/AddDirector/" />
+        <Route component={AddMovie} exact path="/AddMovie/" />
         <Route component={NotFound} path="**" />
         <Redirect to="**" />
       </Switch>

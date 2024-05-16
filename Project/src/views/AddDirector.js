@@ -4,7 +4,6 @@ import { Helmet } from 'react-helmet'
 import '../components/app/App.css'
 import SideBar from "./sideBar";
 
-
 const AddDirector = (props) => {
   return (
     <body className="page">

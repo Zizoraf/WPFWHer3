@@ -82,6 +82,7 @@ namespace Project.Controllers
             var film = await _context.Films
                 .Include(film => film.Director)
                 .Include(film => film.FilmReviews)
+                .Where(film => film.Id == id)
                 .Select(film => new FilmDTO (film.Id, film.Title, film.Year, film.LandRecorded,
                     film.FilmReviews
                         .Select(review => new ReviewDTO (review.Id, review.Score, review.Description, review.CreationDate, review.Username)).ToList(),
