@@ -6,7 +6,7 @@ import SideBar from "./sideBar";
 
 const AddMovie = (props) => {
   return (
-    <body className="page">
+    <div className="page">
       <Helmet>
         <title>Look up movie</title>
       </Helmet>
@@ -14,7 +14,7 @@ const AddMovie = (props) => {
       <div className="mainContainer">
           <AddMovieForm></AddMovieForm>
       </div>
-    </body>
+    </div>
   )
 }
 

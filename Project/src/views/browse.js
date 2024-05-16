@@ -7,7 +7,7 @@ import SideBar from "./sideBar";
 
 const Browse = (props) => {
   return (
-    <body className="page">
+    <div className="page">
       <Helmet>
         <title>Movie reviewer</title>
       </Helmet>
@@ -17,7 +17,7 @@ const Browse = (props) => {
           <h2 className="SecondaryText">Movie name</h2>
           <Film></Film>
       </div>
-    </body>
+    </div>
   )
 }
 

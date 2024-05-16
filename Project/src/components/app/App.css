@@ -1,6 +1,7 @@
 html,body{
   height: 100%;
-  width: 100%
+  width: 100%;
+  background-color: #F0EFF4;
 }
 
 .App {
@@ -10,6 +11,10 @@ html,body{
 .App-logo {
   height: 40vmin;
   pointer-events: none;
+}
+
+.AppContainer{
+  height: 100%;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -65,4 +70,23 @@ html,body{
 .SecondaryText{
   font-size: 20px;
   font-weight: 500;
+}
+
+.descriptionTextContainerContainer{
+  padding-top: 42px;
+}
+
+.descriptionTextContainer{
+  display: flex;
+}
+
+.descriptionText{
+  width: 200px;
+}
+
+.hrBar{
+  border: none;
+  height: 1px;
+  background-color: #000;
+  margin: 32px 0 48px 0;
 }

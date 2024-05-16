@@ -1,5 +1,5 @@
 ﻿.sidenav{
-    height: 100%;  
+    height: auto;  
     width: 25%;  
     position: relative;
     top: 0; 
@@ -36,4 +36,8 @@
 .descriptionText{
     align-self: center;
     padding-left: 4px;
+}
+
+.space{
+    margin-top: 60px;
 }

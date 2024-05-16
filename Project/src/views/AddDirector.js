@@ -6,7 +6,7 @@ import SideBar from "./sideBar";
 
 const AddDirector = (props) => {
   return (
-    <body className="page">
+    <div className="page">
       <Helmet>
         <title>Look up movie</title>
       </Helmet>
@@ -14,7 +14,7 @@ const AddDirector = (props) => {
       <div className="mainContainer">
           <AddDirectorForm></AddDirectorForm>
       </div>
-    </body>
+    </div>
   )
 }
 
