@@ -88,7 +88,7 @@ public class FilmControllerTests
         _mock.Setup(ctx => ctx.Films).Returns(DbSetMock.Create(film.AsQueryable()));
 
         var controller = new FilmController(_mock.Object, _mockGreeting.Object);
-        var filmDtoEditNameAndYear = new FilmDtoEditNameAndYear ("Updated Title", 2023 );
+        var filmDtoEditNameAndYear = new FilmDtoEditNameAndYear ("Updated Title", 2023, "Oceania");
         
         var result = await controller.PutFilmMockTest(1, filmDtoEditNameAndYear);
         var result2 = await controller.GetFilms();
@@ -107,7 +107,7 @@ public class FilmControllerTests
         _mock.Setup(ctx => ctx.Directors.FindAsync(directorId)).ReturnsAsync(director);
         _mock.Setup(ctx => ctx.Films).Returns(DbSetMock.Create(new List<Film>().AsQueryable()));
         
-        var testSubject = new FilmAdd ("Test Film", 2023);
+        var testSubject = new FilmAdd ("Test Film", 2023, "Oceania");
 
         FilmController controller = new FilmController(_mock.Object, _mockGreeting.Object);
 
@@ -123,7 +123,7 @@ public class FilmControllerTests
     {
         // Arrange
         var filmId = 1;
-        var film = new Film { Id = filmId, Title = "Doom", Year = 1996};
+        var film = new Film { Id = filmId, Title = "Doom", Year = 1996, LandRecorded = "Zwitserland"};
         _mock.Setup(ctx => ctx.Films.FindAsync(filmId)).ReturnsAsync(film);
 
         FilmController controller = new FilmController(_mock.Object, _mockGreeting.Object);
@@ -143,6 +143,7 @@ public class FilmControllerTests
                 Id = 1,
                 Title = "Inception",
                 Year = 2010,
+                LandRecorded = "Oceania",
                 FilmReviews = new List<Review>(),
                 DirectorId = 1, // Assuming you have a Director with Id 1
                 Director = new Director
@@ -156,6 +157,7 @@ public class FilmControllerTests
                 Id = 2,
                 Title = "The Dark Knight",
                 Year = 2008,
+                LandRecorded = "Murica",
                 FilmReviews = new List<Review>(),
                 DirectorId = 1, // Assuming Christopher Nolan is the director again
                 Director = new Director
@@ -169,6 +171,7 @@ public class FilmControllerTests
                 Id = 3,
                 Title = "Interstellar",
                 Year = 2014,
+                LandRecorded = "Bangladesh",
                 FilmReviews = new List<Review>(),
                 DirectorId = 1, // Once more, assuming Christopher Nolan is the director
                 Director = new Director
