@@ -1,8 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
-import '../components/app/App.css'
-
-function AddReview() {
+function AddReview({ movieId }) {
     const [textInput, setTextInput] = useState('');
     const [selectValue, setSelectValue] = useState('');
     const [username, setUsername] = useState('');
@@ -19,30 +17,32 @@ function AddReview() {
         setUsername(event.target.value);
     };
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
 
-        const formData = {
-            textInput: textInput,
-            selectValue: selectValue,
+        const reviewDto = {
+            score: parseInt(selectValue), // Convert selectValue to integer
+            description: textInput,
             username: username
         };
 
-        fetch('https://localhost:7281/api/Review/Add', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(formData)
-        })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-            })
-            .catch(error => {
-                console.error('Error sending review:', error);
+        try {
+            const response = await fetch(`https://localhost:7281/api/Review/${movieId}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(reviewDto)
             });
+
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+
+            // Handle success if needed
+        } catch (error) {
+            console.error('Error sending review:', error);
+        }
     };
 
     return (
@@ -52,7 +52,7 @@ function AddReview() {
                     Username:
                     <input type="text" value={username} onChange={handleUsernameChange} className="formInput" placeholder="PirateSoftware"/>
                 </label>
-                <label >
+                <label>
                     Rating:
                     <select value={selectValue} onChange={handleSelectChange} className="rating">
                         <option value="">1</option>
@@ -65,8 +65,6 @@ function AddReview() {
                     <textarea className="reviewAddTextContainer" value={textInput} onChange={handleTextChange} placeholder="Write review here"/>
                 </label>
                 <br/>
-
-                <br/>
                 <button type="submit" className="submitButton">Submit review</button>
             </form>
         </div>
@@ -74,4 +72,5 @@ function AddReview() {
 }
 
 export default AddReview;
+
 

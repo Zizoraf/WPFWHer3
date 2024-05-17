@@ -65,7 +65,7 @@ function GetFilmFromID() {
                     <hr className="hrBar"/>
                     <div>
                         <div className="SecondaryText">Add Review</div>
-                        <AddReview></AddReview>
+                        <AddReview movieId={data.id} />
                         <div className="space"/>
                         <div className="TitleText">Reviews</div>
                         <div className="reviewAddContainer">

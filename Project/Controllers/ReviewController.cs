@@ -16,15 +16,9 @@ namespace Project.Controllers
     {
         private readonly BioscoopContext _context;
         private readonly IGreetingDependency _greetingDependency;
-        private readonly IReviewDependency _reviewDependency;
         public ReviewController(BioscoopContext context)
         {
             _context = context;
-        }
-        
-        public ReviewController(IReviewDependency context)
-        {
-            _reviewDependency = context;
         }
 
         // GET: api/Review

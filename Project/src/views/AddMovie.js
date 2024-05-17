@@ -91,7 +91,7 @@ function AddMovieForm({ onMovieAdded }) {
             <label className="formLabel">
                 Release date:
                 <input type="text" name="Year" value={movieData.Year} onChange={handleInputChange} className="formInput"
-                       placeholder="dd-mm-yyyy"/>
+                       placeholder="Year"/>
             </label>
             <label className="formLabel">
                 Land recorded:
