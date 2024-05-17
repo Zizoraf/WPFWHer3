@@ -173,6 +173,7 @@ html,body{
 }
 
 .formLabel {
+  width: 300px;
   display: flex;
   flex-direction: column;
   margin-bottom: 15px;
