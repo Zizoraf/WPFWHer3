@@ -57,8 +57,7 @@ html,body{
   width: 85%;
   height: 100%;
   background-color: #F0EFF4;
-  padding: 20px;
-  padding-left: 48px;
+  padding: 44px 20px 20px 48px;
   overflow: auto;
 }
 
@@ -157,7 +156,13 @@ html,body{
   display: flex;
   flex-direction: column;
   width: 300px;
-  padding: 20px;
+  border-radius: 8px;
+}
+
+.directorForm {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
   border-radius: 8px;
 }
 
@@ -187,7 +192,8 @@ html,body{
 }
 
 .submitButton {
-  padding: 10px 15px;
+  margin-top: 24px;
+  padding: 10px 15px 10px 15px;
   color: #fff;
   background-color: #333;
   border: none;

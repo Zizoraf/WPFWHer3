@@ -82,22 +82,26 @@ function AddMovieForm({ onMovieAdded }) {
 
     return (
         <form onSubmit={handleSubmit} className="movieForm">
-            <h2 className="formTitle">Add Movie</h2>
+            <h1 className="TitleText">Add Movie</h1>
             <label className="formLabel">
                 Movie name:
-                <input type="text" name="Title" value={movieData.Title} onChange={handleInputChange} className="formInput" />
+                <input type="text" name="Title" value={movieData.Title} onChange={handleInputChange}
+                       className="formInput"/>
             </label>
             <label className="formLabel">
                 Release date:
-                <input type="text" name="Year" value={movieData.Year} onChange={handleInputChange} className="formInput" placeholder="dd-mm-yyyy" />
+                <input type="text" name="Year" value={movieData.Year} onChange={handleInputChange} className="formInput"
+                       placeholder="dd-mm-yyyy"/>
             </label>
             <label className="formLabel">
                 Land recorded:
-                <input type="text" name="LandRecorded" value={movieData.LandRecorded} onChange={handleInputChange} className="formInput" />
+                <input type="text" name="LandRecorded" value={movieData.LandRecorded} onChange={handleInputChange}
+                       className="formInput"/>
             </label>
             <label className="formLabel">
                 Director:
-                <select name="DirectorId" value={movieData.DirectorId} onChange={handleInputChange} className="formInput">
+                <select name="DirectorId" value={movieData.DirectorId} onChange={handleInputChange}
+                        className="formInput">
                     <option value="">Select Director</option>
                     {directors.map(director => (
                         <option key={director.id} value={director.id}>{director.name}</option>

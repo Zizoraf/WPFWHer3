@@ -24,7 +24,8 @@ public class Startup(IWebHostEnvironment env, IConfiguration configuration)
             });
         }
 
-        services.AddCors(options => options.AddPolicy(MyAllowSpecificOrigins, policy => { policy.WithOrigins("http://localhost:3000");
+        services.AddCors(options => options.AddPolicy(MyAllowSpecificOrigins, policy => { 
+            policy.WithOrigins("http://localhost:3000");
             policy.AllowAnyHeader();
         }));
 

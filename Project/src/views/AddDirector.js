@@ -11,9 +11,10 @@ const AddDirector = (props) => {
         <title>Look up movie</title>
       </Helmet>
       <SideBar />
-      <div className="mainContainer">
-          <AddDirectorForm></AddDirectorForm>
-      </div>
+        <div className="mainContainer">
+            <h1 className="TitleText">Add director</h1>
+            <AddDirectorForm></AddDirectorForm>
+        </div>
     </div>
   )
 }
