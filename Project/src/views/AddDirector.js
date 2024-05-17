@@ -56,7 +56,7 @@ function AddDirectorForm({ onDirectorAdded }) {
         <form onSubmit={handleSubmit} className="directorForm">
             <label className="formLabel">
                 Director Name:
-                <input type="text" value={directorName} onChange={handleNameChange} className="formInput" />
+                <input type="text" value={directorName} onChange={handleNameChange} className="formInput" placeholder="Steven Spielberg"/>
             </label>
             <button type="submit" className="submitButton">Add Director</button>
         </form>

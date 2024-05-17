@@ -86,7 +86,7 @@ function AddMovieForm({ onMovieAdded }) {
             <label className="formLabel">
                 Movie name:
                 <input type="text" name="Title" value={movieData.Title} onChange={handleInputChange}
-                       className="formInput"/>
+                       className="formInput" placeholder="Movie name"/>
             </label>
             <label className="formLabel">
                 Release date:
@@ -96,7 +96,7 @@ function AddMovieForm({ onMovieAdded }) {
             <label className="formLabel">
                 Land recorded:
                 <input type="text" name="LandRecorded" value={movieData.LandRecorded} onChange={handleInputChange}
-                       className="formInput"/>
+                       className="formInput" placeholder="Netherlands"/>
             </label>
             <label className="formLabel">
                 Director:

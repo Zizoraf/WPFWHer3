@@ -114,6 +114,10 @@ html,body{
   border-radius: 5px;
   text-align: start;
   resize: none;
+  padding: 10px;
+  border: 1px solid #ccc;
+  margin-top: 5px;
+  font-size: 1em;
 }
 
 .reviewAddContainer{
@@ -200,5 +204,10 @@ html,body{
   border: none;
   border-radius: 4px;
   font-size: 1em;
+}
+
+.rating{
+  margin: 24px;
+  border-radius: 5px;
 }
 

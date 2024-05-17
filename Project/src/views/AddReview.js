@@ -50,20 +50,19 @@ function AddReview() {
             <form onSubmit={handleSubmit}>
                 <label className="formLabel">
                     Username:
-                    <input type="text" value={username} onChange={handleUsernameChange} className="formInput"/>
+                    <input type="text" value={username} onChange={handleUsernameChange} className="formInput" placeholder="PirateSoftware"/>
                 </label>
-                <label>
+                <label >
                     Rating:
-                    <select value={selectValue} onChange={handleSelectChange}>
+                    <select value={selectValue} onChange={handleSelectChange} className="rating">
                         <option value="">1</option>
                         {[2, 3, 4, 5].map(value => (
                             <option key={value} value={value}>{value}</option>
                         ))}
                     </select>
                 </label>
-
                 <label>
-                    <textarea className="reviewAddTextContainer" value={textInput} onChange={handleTextChange}/>
+                    <textarea className="reviewAddTextContainer" value={textInput} onChange={handleTextChange} placeholder="Write review here"/>
                 </label>
                 <br/>
 
