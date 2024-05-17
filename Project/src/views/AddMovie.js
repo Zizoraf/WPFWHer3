@@ -18,15 +18,32 @@ const AddMovie = (props) => {
   )
 }
 
-
-
 function AddMovieForm({ onMovieAdded }) {
     const [movieData, setMovieData] = useState({
         Title: '',
         Year: '',
         LandRecorded: '',
-        DirectorId: '' // Adding DirectorId field to the state
+        DirectorId: ''
     });
+
+    const [directors, setDirectors] = useState([]);
+
+    useEffect(() => {
+        fetchDirectors();
+    }, []);
+
+    const fetchDirectors = async () => {
+        try {
+            const response = await fetch('https://localhost:7281/api/Director');
+            if (!response.ok) {
+                throw new Error('Failed to fetch directors');
+            }
+            const data = await response.json();
+            setDirectors(data);
+        } catch (error) {
+            console.error('Error fetching directors:', error);
+        }
+    };
 
     const handleInputChange = (event) => {
         const { name, value } = event.target;
@@ -64,26 +81,33 @@ function AddMovieForm({ onMovieAdded }) {
     };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <label>
-                Title:
-                <input type="text" name="Title" value={movieData.Title} onChange={handleInputChange} />
+        <form onSubmit={handleSubmit} className="movieForm">
+            <h2 className="formTitle">Add Movie</h2>
+            <label className="formLabel">
+                Movie name:
+                <input type="text" name="Title" value={movieData.Title} onChange={handleInputChange} className="formInput" />
             </label>
-            <label>
-                Year:
-                <input type="number" name="Year" value={movieData.Year} onChange={handleInputChange} />
+            <label className="formLabel">
+                Release date:
+                <input type="text" name="Year" value={movieData.Year} onChange={handleInputChange} className="formInput" placeholder="dd-mm-yyyy" />
             </label>
-            <label>
-                Land Recorded:
-                <input type="text" name="LandRecorded" value={movieData.LandRecorded} onChange={handleInputChange} />
+            <label className="formLabel">
+                Land recorded:
+                <input type="text" name="LandRecorded" value={movieData.LandRecorded} onChange={handleInputChange} className="formInput" />
             </label>
-            <label>
-                Director ID:
-                <input type="text" name="DirectorId" value={movieData.DirectorId} onChange={handleInputChange} />
+            <label className="formLabel">
+                Director:
+                <select name="DirectorId" value={movieData.DirectorId} onChange={handleInputChange} className="formInput">
+                    <option value="">Select Director</option>
+                    {directors.map(director => (
+                        <option key={director.id} value={director.id}>{director.name}</option>
+                    ))}
+                </select>
             </label>
-            <button type="submit">Add Movie</button>
+            <button type="submit" className="submitButton">Save new movie</button>
         </form>
     );
 }
 
 export default AddMovie;
+

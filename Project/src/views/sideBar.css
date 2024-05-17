@@ -24,20 +24,3 @@
 .sideBarButton:hover{
     background-color: #D5D5D5;
 }
-
-.descriptionContainer{
-    text-align: right;
-    padding-top: 24px;
-    align-self: start;
-    padding-bottom: 12px;
-    font-weight: bold;
-}
-
-.descriptionText{
-    align-self: center;
-    padding-left: 4px;
-}
-
-.space{
-    margin-top: 60px;
-}

@@ -54,7 +54,6 @@ function GetFilmFromID() {
                         </div>
                         <div className="descriptionTextContainer">
                             <div className="descriptionText">Directed by: </div>
-                            {/* Accessing director's name with optional chaining */}
                             <div>{data.director?.name}</div>
                         </div>
                         <div className="descriptionTextContainer">
@@ -64,15 +63,21 @@ function GetFilmFromID() {
                     </div>
                     <hr className="hrBar"/>
                     <div>
-                        <div>Add Review</div>
+                        <div className="SecondaryText">Add Review</div>
                         <MyForm></MyForm>
                         <div className="space"/>
-                        <div>Reviews</div>
-                        {data.filmReviews.map(review => (
-                            <ReviewItem key={review.id} review={review} />
-                        ))}
+                        <div className="TitleText">Reviews</div>
+                        <div className="reviewAddContainer">
+                            {data.filmReviews.map((review, index) => (
+                                <div key={review.id}>
+                                    <ReviewItem review={review}/>
+                                    {index < data.filmReviews.length - 1 && <hr className="reviewSeparator"/>}
+                                </div>
+                            ))}
+                        </div>
+
                     </div>
-                    
+
                 </>
             )}
         </div>
@@ -98,15 +103,13 @@ function MyForm() {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-
-        // Prepare data to send
+        
         const formData = {
             textInput: textInput,
             selectValue: selectValue,
             username: username
         };
-
-        // Send data using POST request
+        
         fetch('https://localhost:7281/api/Review/Add', {
             method: 'POST',
             headers: {
@@ -126,29 +129,31 @@ function MyForm() {
     };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <label>
-                Review Text:
-                <input type="text" value={textInput} onChange={handleTextChange} />
-            </label>
-            <br />
-            <label>
-                Rating (1-5):
-                <select value={selectValue} onChange={handleSelectChange}>
-                    <option value="">Select</option>
-                    {[1, 2, 3, 4, 5].map(value => (
-                        <option key={value} value={value}>{value}</option>
-                    ))}
-                </select>
-            </label>
-            <br />
-            <label>
-                Username:
-                <input type="text" value={username} onChange={handleUsernameChange} />
-            </label>
-            <br />
-            <button type="submit">Submit review</button>
-        </form>
+        <div className="reviewAddContainer">
+            <form onSubmit={handleSubmit}>
+                <label>
+                    Username:
+                    <input type="text" value={username} onChange={handleUsernameChange}/>
+                </label>
+                <label>
+                    Rating (1-5):
+                    <select value={selectValue} onChange={handleSelectChange}>
+                        <option value="">1</option>
+                        {[2, 3, 4, 5].map(value => (
+                            <option key={value} value={value}>{value}</option>
+                        ))}
+                    </select>
+                </label>
+    
+                <label>
+                    <textarea className="reviewAddTextContainer" value={textInput} onChange={handleTextChange}/>
+                </label>
+                <br/>
+    
+                <br/>
+                <button type="submit" className="submitButton">Submit review</button>
+            </form>
+        </div>
     );
 }
 

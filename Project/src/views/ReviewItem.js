@@ -4,15 +4,25 @@ function ReviewItem({ review }) {
     return (
         <div className="reviewItem">
             <div className="reviewItemHeader">
-                <div>Score: {review.score}</div>
-                <div>Username: {review.username}</div>
-                <div>Creation Date: {review.creationDate}</div>
+                <div className="descriptionTextContainer">
+                    <div className="descriptionText">Score: </div>
+                    <div>{review.score}</div>
+                </div>
+                <div className="descriptionTextContainer">
+                    <div className="descriptionText">Username: </div>
+                    <div>{review.username}</div>
+                </div>
+                <div className="descriptionTextContainer">
+                    <div className="descriptionText">Creation Date: </div>
+                    <div>{review.creationDate}</div>
+                </div>
             </div>
             <div className="reviewItemContent">
-                <div>Description: {review.description}</div>
+                <div>{review.description}</div>
             </div>
         </div>
     );
 }
+
 
 export default ReviewItem;

@@ -18,8 +18,6 @@ const AddDirector = (props) => {
   )
 }
 
-
-
 function AddDirectorForm({ onDirectorAdded }) {
     const [directorName, setDirectorName] = useState('');
 
@@ -54,14 +52,15 @@ function AddDirectorForm({ onDirectorAdded }) {
     };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <label>
+        <form onSubmit={handleSubmit} className="directorForm">
+            <label className="formLabel">
                 Director Name:
-                <input type="text" value={directorName} onChange={handleNameChange} />
+                <input type="text" value={directorName} onChange={handleNameChange} className="formInput" />
             </label>
-            <button type="submit">Add Director</button>
+            <button type="submit" className="submitButton">Add Director</button>
         </form>
     );
 }
 
 export default AddDirector;
+
