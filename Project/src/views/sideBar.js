@@ -10,7 +10,7 @@ const sideBar = props => {
             <div className="descriptionContainer">Discover</div>
             <Link className="button sideBarButton" to={`/`}>
                 <img src="searchIconBlack.svg" alt="SearchIcon"/>
-                <div className="descriptionTextSideBar">Browse</div>
+                <div className="descriptionTextSideBar">Browse Movies</div>
             </Link>
             <div className="descriptionContainer">Add/Edit</div>
             <Link className="button sideBarButton" to={`/addMovie`}>
